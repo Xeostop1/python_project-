@@ -142,13 +142,31 @@ print(int(a))
 print(int(b))
 #=============================================
 # 랜덤으로 1~75 사이 정수 10개 출력 
-a= (random()*75)+1
+'''a= (random()*75)+1
 print("랜덤값",int(a))
 arr_test=[10]
-
-# for i in arr_test:
-    # arr_test.append([int(a)])
-
-
+arr_test.append(int(a))
 for i in arr_test:
-    print(i)
+    print(i)'''
+    
+a=5
+b=0
+if a:
+    print("a True")
+
+if b:
+    print("b F")
+
+ #숫자자료 비교 
+if(5>3):
+    print("5는 3보다 큽니다")
+    
+#문자열 비교가 안되나?? 유니코드로 못하나? → 유니코드로는 가능함    
+if("a">"A"):
+    print("a는 A보다 큽니다")
+    
+#bool*()
+print("불리언 검사",bool([1,2]))
+a=" "
+print(bool(a))
+    
