@@ -94,3 +94,61 @@ print("인트형 반환",int(c))
 # Math 사용
 from math import *
 print(floor(c))
+
+#=============================================
+# 연습문제 1
+# 1. 타입 출력 (a,b)
+# 2. a 정수, b 실수 변환출력
+# 3. a 반올림
+
+a=3.14
+b=4
+
+print("a",type(a))
+print("b",type(b))
+print("a 정수",int(a))
+print("b",float(b))
+print("a 반올림",floor(a))
+#=============================================
+# b를 a로 나눈 몫 and 나머지
+a=4
+b=5
+print(b//a)
+print(b%a)
+
+#=============================================
+# a의 절대값, b를 변수로 a 제곱, abc 중에  max, min
+a=-4
+b=5
+c=2
+print(abs(a))
+#둘다 같은 값
+print("제곱값",pow(b,a))#헷갈린다 뒤가 지수, 앞에 제곱할 수 
+print("제곱값",b**a)#헷갈린다
+print("max",max(a,b,c))
+print("min",min(a,b,c))
+#=============================================
+# 올림과 내림
+a=1.2
+print("올림",ceil(a)) #씰이고 씰링과 관련이 있나봐(: 의 최대 한계[상한] 뜻이 있데)
+print("내림",floor(a))
+#=============================================
+# 랜덤에서 정수 10개 출력
+from random import *
+a=(random()*10)+1
+#이렇게 해도 되고,randrange()도 있데 #왜 안되지???? 확인하기 →단독만 사용해야 되나봐 random.이 아니고 
+b=randrange(1, 10)
+print(int(a))
+print(int(b))
+#=============================================
+# 랜덤으로 1~75 사이 정수 10개 출력 
+a= (random()*75)+1
+print("랜덤값",int(a))
+arr_test=[10]
+
+# for i in arr_test:
+    # arr_test.append([int(a)])
+
+
+for i in arr_test:
+    print(i)
