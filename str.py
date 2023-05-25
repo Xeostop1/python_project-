@@ -49,6 +49,7 @@ print("It is {} in the morning ".format(9))
 print("It is {} in the {}".format(6, "night"))
 # b=a.format()
 
+#제일 많이 사용하는 형태 
 weather="sad"
 print(f"It is a {weather} day")
 
@@ -56,6 +57,7 @@ print(f"It is a {weather} day")
 #아 클래스를 안나가는구나
 
 capital="ABCD".lower()
+print(capital)
 capital="ABCD".isupper()
 capital="ABCD".replace("C","X")
 print(capital)
