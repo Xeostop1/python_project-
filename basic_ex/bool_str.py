@@ -22,6 +22,7 @@ a=1000
 a*=0.7
 print("a가 30% 하락한 결과값 ",int(a))
 
+
 def persent(num):
     res=num-(num*0.3)
     return print("a가 30% 하락한 값은",int(num))

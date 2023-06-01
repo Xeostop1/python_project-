@@ -88,6 +88,8 @@ last_page=json.loads(commnet.text.replace("_callback(","")[:-2])["result"]["page
 print("==========")
 #페이지가 0부터 시작해서 len 으로 쓰면 안되나?? 이렇게 하면 1부터 내가 원하는 페이지까지 추출가능(range는 -1까지 만들어짐)
 #위쪽 딕셔너리에 "commnet":[] 먼저 넣고 아래쪽에서 리스트로 어펜드
+
+    
 for i in range(1, last_page+1):
     commnet_url=f"https://apis.naver.com/commentBox/cbox/web_naver_list_jsonp.json?ticket=news&templateId=default_politics_m2&pool=cbox5&_cv=20230523152013&lang=ko&country=KR&objectId=news021%2C0002574833&categoryId=&pageSize=20&indexSize=10&groupId=&listType=OBJECT&pageType=more&page={i}&initialize=true&followSize=5&userType=&useAltSort=true&replyPageSize=20&sort=new&includeAllStatus=true&_=1685577332133"
     for i in json.loads(commnet.text.replace("_callback(","")[:-2])["result"]["commentList"]:
