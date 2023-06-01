@@ -11,7 +11,7 @@ options.add_argument('--headless=new')
 options.add_argument("window-size=1920x1080")
 options.add_argument(f"user-agent={user_agent}")   
 browser= webdriver.Chrome(
-    service=Service(ChromeDriverManager().install(), options=options)  #생성자를 통해서 옵션전달하기 
+    service=Service(ChromeDriverManager().install(), options=options)  
 )
 browser.maximize_window() 
 
