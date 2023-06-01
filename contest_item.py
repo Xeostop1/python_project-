@@ -6,6 +6,24 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
 
+for page in range(pages):
+    page_num=page+1
+    url=f"https://section.cafe.naver.com/ca-fe/home/search/articles?q={keyword}&pr=7&ps={start_date}&pe={end_date}"
+    browser.get(url)
+    time.sleep(3)
+    soup= BeautifulSoup(browser.page_source, "html.parser")
+    item_list=soup.find("ul", class_="ArticleList").find_all("div", class_="detail_area")
+    
+    count=0
+    for i in item_list:
+        count+=1
+        title=i.find("a", class_="item_subject").get_text().strip()
+        description=i.find("p",class_="item_content").get_text().strip()
+        print(f"{count} 제목: {title} / 설명: {description}")
+    
+
+
+
 #======페이지카운터 함수=======
 def get_page_counter():
   #옵션세팅
