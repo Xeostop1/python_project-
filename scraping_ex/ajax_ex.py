@@ -30,7 +30,6 @@ res2 = requests.get(articl_url, headers=user_agent)
 soup = BeautifulSoup(res.text, "html.parser")
 
 
-
 # 댓글이랑 좋아요 가져와야 되서 딕셔너리 형태로 세팅
 news={
     "title": soup.select_one("h2#title_area > span").text.strip(),
