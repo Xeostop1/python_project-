@@ -12,7 +12,7 @@ options.add_argument('--headless')
 options.add_argument("window-size=1920x1080")
 options.add_argument(f"user-agent={user_agent}")   
 browser= webdriver.Chrome(
-    service=Service(ChromeDriverManager().install(), options=options)  #생성자를 통해서 옵션전달하기 
+    service=Service(ChromeDriverManager().install(), options=options)  
 )
 browser.maximize_window()
 #크게 열어놔야 우리가 시각적으로 본 것과 동일한 결과치가 나온다 
