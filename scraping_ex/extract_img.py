@@ -24,7 +24,6 @@ browser.get(url)
 time.sleep(3)
 soup=BeautifulSoup(browser.page_source,"html.parser")
 
-
 #====다시!! 정리하기!!!========
 
 m_url_list=[]
@@ -52,10 +51,10 @@ for i in m_url_list:
     #오리지널로 가려고 이렇게 함 제일 큰 이미지로 바로 들어간 것 
     #Null 값이라면 if
     print(img_url["href"])
-    # if img_url:
-    #     origin_img_urls.append(i+img_url["href"])
-    # else:
-    #     continue
+    if img_url:
+        origin_img_urls.append(i+img_url["href"])
+    else:
+        continue
     #컨티뉴먼 다음 작업을 하고,  pass는 다음줄로 넘어감 
 
 #=====3. 이미지 오리지널 가져오기========
@@ -65,8 +64,4 @@ for i, m_url in origin_img_urls:
     soup=BeautifulSoup(browser.page_source,"html.parser")
     img_url=soup.select_one(".swiper-slide .swiper-slide-active").find("img", class_="img_thumb")
     
-    if img_url:
-        
-    
-
     
