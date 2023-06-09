@@ -59,10 +59,17 @@ while True:
         title=item.select_one("p.tit").get_text().strip() 
         # title=item.p.a.get_text().strip()
         place_name=item.select_one("div.bar")["style"][6:-1]
-        print(place_name)
-        # print(place_name)
-        # print(i+1,title)
-    
+        training_rate = item.select_one("div.bar")
+        
+        #None 처리
+        
+        if "해당없음" in training_rate.get_text().strip():
+            training_rate="취업률 정보 없음"
+        else:
+            training_rate=training_rate["style"][6:-1]
+        print(f"데이터 번호 {i+1}")
+        print(f"제목 {title}")
+        print(f"취업률 {training_rate}")
     print(f"페이지 {page_num} 추출완료")
     #===다음페이지 세팅======위의 넥스트 페이지 보다 크다면 멈춰!
     # next_p_num=page_num+1
