@@ -2,103 +2,42 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from bs4 import  BeautifulSoup
-from selenium.webdriver.common.by import By
 import time
+import csv
+import codecs
+
+#======야놀자 스크래핑=====
+#변수: 티켓이름, 가격
+#야놀자:셀레니움 스크롤 조작 이용 후 list 형태로 csv저장
+# 공모전에 필요한 로우데이터로 사용하기 위해 
+# 지역별 티켓판매 현황(티켓이름)과 가격 스크래핑
+#=== 향후 업데이트===
+#1. 추후 관광 감성어 추출 업데이트가 필요(https://www.yanolja.com/magazine?source=DI_RECOMMEND_MAGAZINE___W42)
+#2. try except 처리 필요
+
+
 
 #======환경세팅================
-#내 환경 알려주기(정상적인 접근이 아니라 똑같은 척 해야 함)
 user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
-
 options=webdriver.ChromeOptions()
-options.add_argument('--headless')                               #헤드리스→ 조작 시 실제로 클릭하지 않아도 창 끄기(T)
-options.add_argument("window-size=1920x1080")       #아규먼트 추가→  창 사이즈(≒모니터사이즈)
-options.add_argument(f"user-agent={user_agent}")    #아규먼트 추가→  유저에이전트 세팅
-
-# #browser 변수명을 많이 사용 → 이제 자동화된 크롬브라우저
+options.add_argument('--headless')                              
+options.add_argument("window-size=1920x1080")      
+options.add_argument(f"user-agent={user_agent}")   
 browser= webdriver.Chrome(
-    service=Service(ChromeDriverManager().install(), options=options)  #생성자를 통해서 옵션전달하기 
-)
-browser.maximize_window()           
-# time.sleep(3000)                   
+    service=Service(ChromeDriverManager().install(), options=options))
+browser.maximize_window()                        
 
-#접속하는 함수 따로 만들기
-
-
-
-# def extract_yalolja():
-#     result=[]
-#     items={}
-#     #======셀레니움 세팅===============
-#     user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
-#     #셀레니움 옵션 객체 만들기 → 크롬한테 옵션 던지기 위한 옵션 세팅 
-#     options=webdriver.ChromeOptions()
-#     options.add_argument('--headless')  
-#     options.add_argument("window-size=1920x1080")       
-#     options.add_argument(f"user-agent={user_agent}")    
-
-#     #browser 변수명을 많이 사용 → 이제 자동화된 크롬브라우저
-#     browser= webdriver.Chrome(
-#         service=Service(ChromeDriverManager().install(), options=options)  #생성자를 통해서 옵션전달하기 
-#     )
-#     browser.maximize_window()          
-#     # time.sleep(3000)            
-        
-#     #=======bs4 파싱==============``
-#     soup=BeautifulSoup(browser.page_source, "html.parser")
-#     url="https://www.yanolja.com/leisure/list?mediumcat=10120006"
-#     browser.get(url) 
-#     time.sleep(5)  
-#     #====데이터추출하기======== 
-#     #브라우저 소스를 변화시켜서 가져 올 것이다. 
-#     print("---------")
-#     item_list=soup.select_one("div#__next")
-    
-#     # print(type(item_list))
-#     print(item_list)
-#     # for i in item_list:
-#     #     print(i)
-        
-#     # pirce_list=soup.find_all("div", class_="LeisureListItem_body__1iNjJ")
-#     # for i, j in zip(item_list, pirce_list):
-#     #     items = {
-#     #         "name": i.get_text().strip().replace(",", " "),
-#     #         "price": j.get_text().strip().replace(",", " ")
-#     #     }
-#     #     result.append(items)
-        
-#     # return result
-
-# extract_yalolja()
-
-# 데이터 서칭까진 가능하고 스크롤만 해결 하면 끝
-
-
-#======셀레니움 세팅===============
-# user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
-# #셀레니움 옵션 객체 만들기 → 크롬한테 옵션 던지기 위한 옵션 세팅 
-# options=webdriver.ChromeOptions()
-# options.add_argument('--headless')  
-# options.add_argument("window-size=1920x1080")       
-# options.add_argument(f"user-agent={user_agent}")    
-
-# #browser 변수명을 많이 사용 → 이제 자동화된 크롬브라우저
-# browser= webdriver.Chrome(
-#     service=Service(ChromeDriverManager().install(), options=options)  #생성자를 통해서 옵션전달하기 
-# )
-# browser.maximize_window()          
-# time.sleep(3000)            
-    
-result=[]
+results=[]
 items={}
 #=======bs4 파싱==============
 url="https://www.yanolja.com/leisure/list?mediumcat=10120006"
 browser.get(url) 
 time.sleep(3)  
 #====데이터추출하기======== 
-#브라우저 소스를 변화시켜서 가져 올 것이다. → 겟 하고와서 bs4로 추출 꼭 순서를 잊지 말자!→ 추출했엉 ㅠㅠㅠ 엉엉 얏호 얏호 
 
-#===========스크롤 내리기=============== 브라우저get 가지고 와서 스크롤하고 bs4 하기 
-prev_height = browser.execute_script("return document. body.scrollHeight")
+
+#===========스크롤 내리기===============
+prev_height = browser.execute_script("return document.body.scrollHeight")
 while True:
 	#첫번째로 스크롤 내리기
 	browser.execute_script("window.scrollTo(0,document.body.scrollHeight)")
@@ -113,20 +52,26 @@ while True:
 	prev_height = current_height
 
 soup=BeautifulSoup(browser.page_source, "html.parser")
-#css 셀렉터 쓸 경우 꼭 다 붙여서 쓰자 
-#두개를 쓰려면 더 큰 뎁스의 것을 가지고 오자! 이렇게 개별 단위로 가지고 오면 쓰기 어려움
-item_list=soup.select("p.LeisureListItem_title__U-d8s")
-pirce_list=soup.select("span.LeisurePriceDiscount_amount__19qBa")
-
-# 그럼 두개다 넣으려면 크게 위에서 
-# 어팬드 하는 방법 item_info.append([title,description,c_name,date])
+item_list=soup.select("a.LeisureListItem_container__12YuE")
 
 for i in item_list:
+    items={
+     	"title":i.select_one("p.LeisureListItem_title__U-d8s").get_text().strip().replace(",", " "),
+     	"price":i.select_one("span.LeisurePriceDiscount_amount__19qBa").get_text().strip().replace(",", ""),
+    	}
+    results.append(items)
     
+# print(results)
 
-# for i in item_list:
-#     print(i.text.strip())    
+#====csv 파일생성 utf처리======
+with codecs.open("yaloja.csv", "wb", encoding="utf-8-sig") as f:
+    header = ['title', 'price']
+    w = csv.DictWriter(f, fieldnames=header)
+    w.writeheader()
+    for item in results:
+        w.writerow(item)
 
 
 
 
+    
