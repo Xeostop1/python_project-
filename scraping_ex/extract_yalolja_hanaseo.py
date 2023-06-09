@@ -24,8 +24,6 @@ items={}
 url="https://www.yanolja.com/leisure/list?mediumcat=10120006"
 browser.get(url) 
 time.sleep(3)  
-#====데이터추출하기======== 
-
 
 #===========스크롤 내리기=============== 브라우저get 가지고 와서 스크롤하고 bs4 하기 
 prev_height = browser.execute_script("return document. body.scrollHeight")

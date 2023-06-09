@@ -70,17 +70,3 @@ plt.xticks(rotation=0)
 plt.show()
 
 
-# 특정 카테고리 차단
-# blocked_categories = ['문화', '해양']
-# category_counts_blocked = category_counts.drop(blocked_categories)
-
-# # 막대 그래프 생성
-# plt.bar(category_counts_blocked.index, category_counts_blocked.values)
-
-# # 제목과 축 레이블 설정
-# plt.title('카테고리별 빈도수 (차단됨)')
-# plt.xlabel('카테고리')
-# plt.ylabel('빈도수')
-
-# # 그래프 표시
-# plt.show()
