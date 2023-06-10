@@ -63,7 +63,7 @@ def scroll_down():
         time.sleep(loading)
         new_h=browser.execute_script(f"return {cur_h}")
         
-        #새높
+        #새높이
         if new_h==old_h or new_h>=max_height:
             print("=====스크롤 작업완료======")
             break 

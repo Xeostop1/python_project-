@@ -6,6 +6,8 @@ from bs4 import BeautifulSoup
 import time
 import csv
 import codecs
+#===상세 리뷰보기 추가====
+
 
 
 #====웹컨트롤======
