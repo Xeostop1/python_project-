@@ -17,7 +17,7 @@ import time
 
 user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36"
 options = webdriver.ChromeOptions()
-options.add_argument("--headless")
+# options.add_argument("--headless")
 options.add_argument("--lang=ko-KR")
 options.add_argument("lang=ko")
 options.add_experimental_option("prefs", {"intl.accept_languages": "ko,ko_KR"})
@@ -29,7 +29,7 @@ browser.maximize_window()
 
 url="https://www.youtube.com/watch?v=UROWQ1VwVYQ"
 loading=2
-max_height=5000
+
 browser.get(url)
 
 #===프로모션팝업창 닫기=======
@@ -40,7 +40,9 @@ def close_promotion():
     except:
         pass
 
+max_height=5000
 #===스크롤 다운=======
+# def scroll_down(max_height=5000): 이렇게 인자도 가능 
 def scroll_down():
     #바로 들어와서 바로 보이는 첫번째 높이 가져오기 
     old_h=browser.execute_script("return document.documentElement.scrollHeight")
