@@ -10,8 +10,20 @@ import time
 import random
 
 
+#데이트 피커 많이 사용.
+#모든 데이터는 엘리먼트가 있다 
+#출발하는 날짜가 없다면 어떻게 할것인가 고민 
+#화살표를 클릭했을 때 어떻게 나올 것인가? 
+#셀레니움 응용 
+#아이프레임으로 옮기는 것 
+#레이징로딩 사이트(비어있는 엘리먼트가 있다)
+#새탭으로 열렸음 
 
-#==숙제: 바에 있는 엘리먼트 숫자를 넣고 취업률 없는 엘리먼트는 분기로 나누어서 취업률 없음 으로 변겅=====
+
+
+
+
+
 user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
 
 options=webdriver.ChromeOptions()
@@ -80,13 +92,19 @@ time.sleep(loading)
 
 
 #=====데이터 추출====== 
+
+#그러면 나는 스크롤 다 내린 후에 마지막에 숩 열어 줄 필요가 있음
+# 지금 나는 너무 혼재 되어있는 상태 위에서 스크롤 내리는거 세팅하고 숩으로 가져 오기 
 last_page=2
 page_num=1
 while True:
     print("현재페이지", page_num)
     soup=BeautifulSoup(browser.page_source, "html.parser")
     # item_list=soup.select('ol.hotel-list-container')
-    item_list=soup.select('.PropertyCard__Link')
+    item_list=soup.select('a.PropertyCard__Link')
+    element = browser.find_element(By.TAG_NAME,'body')
+    time.sleep(loading)
+    element.send_keys(Keys.PAGE_DOWN)
     option_list=[]
     for i in item_list:
         name=i.select_one('h3[data-selenium="hotel-name"]')
@@ -96,6 +114,9 @@ while True:
             name="이름없음"
         print("호텔명", name)
         
+        element.send_keys(Keys.PAGE_DOWN)
+        print("페이지다운")
+        
         area= i.select_one('span.c-kEjbxe .sc-iqHYGH .bpoMrU .hGjjJo .sc-dQppl .cQZIoF')
         if area:
             area=area.get_text().strip()
@@ -103,12 +124,21 @@ while True:
             area="지역없음"
         print("지역", area)
         
+        element.send_keys(Keys.PAGE_DOWN)
+        print("페이지다운")
+        
         price=i.select_one('span[data-selenium="display-price"]')
         if price:
             price=price.get_text().strip()
         else:
             price="가격없음"    
         print("가격", price,"\n")
+          
+        element.send_keys(Keys.PAGE_DOWN)
+        print("페이지다운")
+        
+        #부모에서 gettext 해서 안에있는 모든 데이터 그냥 가지고 오기
+        #굳이 리스트로 넣을 필요 없이 어차피 데이터 처리는 글자만 있으니면 되니까 
         options=i.select('div[data-selenium="pill-container"]')
         if options:
             for option in options:
@@ -117,19 +147,22 @@ while True:
         else:
             option="옵션없음"
         
-        
+
+    time.sleep(loading)
+    element.send_keys(Keys.PAGE_DOWN)
+    
         # for i in option_list:
         #     print(i)
-    page_num+=1
-    if page_num==last_page:
-        break
-    try:
-       next_page_ele=browser.find_element(By.ID, 'paginationNext')
-       print(f"찾음 다음페이지 {page_num+1}")
-       time.sleep(loading)
-       next_page_ele.click()
-       time.sleep(loading)
-       print(f"클릭 다음페이지 {page_num+1}")
-       #클릭 한후에는 와일문 처음으로 돌아 가고 위에 if 브레이크 만나기 전까지 계속 실행 
-    except:
-        print(f"에러: 버튼 미추출 또는 미클릭 ******{page_num+1}")
+    # page_num+=1
+    # if page_num==last_page:
+    #     break
+    # try:
+    #    next_page_ele=browser.find_element(By.ID, 'paginationNext')
+    #    print(f"찾음 다음페이지 {page_num+1}")
+    #    time.sleep(loading)
+    #    next_page_ele.click()
+    #    time.sleep(loading)
+    #    print(f"클릭 다음페이지 {page_num+1}")
+    #    #클릭 한후에는 와일문 처음으로 돌아 가고 위에 if 브레이크 만나기 전까지 계속 실행 
+    # except:
+    #     print(f"에러: 버튼 미추출 또는 미클릭 ******{page_num+1}")
