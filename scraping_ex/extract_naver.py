@@ -67,9 +67,6 @@ for page in range(pages):
         
 
 
-
-
-
         
     time.sleep(5000)  
 
